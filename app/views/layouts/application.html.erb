@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>OH-Wx | <%= yield(:subtitle) %></title>
+  
+  <script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+  <%= javascript_include_tag 'ohwx_dev.js.erb', extname: false %>
+  
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <!-- <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %> -->
+  <%= csrf_meta_tags %>
+</head>
+<body>
+
+	<%= render 'layouts/header' %>
+	<%= yield %>
+	<%= render 'layouts/footer' %>
+</body>
+</html>

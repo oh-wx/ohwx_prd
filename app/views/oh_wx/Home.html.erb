@@ -1,0 +1,138 @@
+﻿	<%= provide(:subtitle, "Home") %>
+	
+	<div id="HomeWrapper" class="clear">
+		<div id="AniTabWrapper" class="wrapper">
+			<nav>
+				<ul id="AniTabs">
+					<li><%= image_tag("Clipart/blog_icon.png", alt: "Blog") %></li>
+					<li><%= image_tag("Clipart/sun_icon.png", alt: "Current Conditions") %></li>
+					<li><%= image_tag("Clipart/rad_icon.png", alt: "Current Radar") %></li>
+					<li><%= image_tag("Clipart/doc_icon.png", alt: "Tutorials") %></li>
+					<li><%= image_tag("Clipart/anat_icon.png", alt: "Anatomy of Storms") %></li>
+					<li><%= image_tag("Clipart/info_icon.png", alt: "Glossary") %></li>
+				</ul>
+			</nav>
+			<div id="" class="hide content">
+				<h3>Animated&nbsp;Tab&nbsp;1</h3>
+				<p>This is the first animated tab.  It must contain <a class="link" href=""><span class="hide">[see&nbsp;</span>links<span class="hide">]</span></a> to other content.</p>
+				<ul>
+					<li></li>
+					<li></li>
+					<li></li>
+				</ul>
+				<a class="" href="">return</a>
+			</div>
+			<div id="" class="hide content">
+				<h3>Animated&nbsp;Tab&nbsp;2</h3>
+				<p>This is the first animated tab.  It must contain <a class="link" href=""><span class="hide">[see&nbsp;</span>links<span class="hide">]</span></a> to other content.</p>
+				<ul>
+					<li></li>
+					<li></li>
+					<li></li>
+				</ul>
+				<a class="" href="">return</a>
+			</div>
+			<div id="" class="hide content">
+				<h3>Current&nbsp;Radar</h3>
+				<img src="http://sirocco.accuweather.com/sat_mosaic_640x480_public/rs/isaroh_.gif" id="rdrOH" alt="Current Radar" width="100%"/>
+				<a class="" href="">return</a>
+			</div>
+			<div id="" class="hide content">
+				<h3>Animated&nbsp;Tab&nbsp;4</h3>
+				<p>This is the first animated tab.  It must contain <a class="link" href=""><span class="hide">[see&nbsp;</span>links<span class="hide">]</span></a> to other content.</p>
+				<ul>
+					<li></li>
+					<li></li>
+					<li></li>
+				</ul>
+				<a class="" href="">return</a>
+			</div>
+			<div id="" class="hide content">
+				<h3>Animated&nbsp;Tab&nbsp;5</h3>
+				<p>This is the first animated tab.  It must contain <a class="link" href=""><span class="hide">[see&nbsp;</span>links<span class="hide">]</span></a> to other content.</p>
+				<ul>
+					<li></li>
+					<li></li>
+					<li></li>
+				</ul>
+				<a class="" href="">return</a>
+			</div>
+			<div id="" class="hide content">
+				<h3>Animated&nbsp;Tab&nbsp;6</h3>
+				<p>This is the first animated tab.  It must contain <a class="link" href=""><span class="hide">[see&nbsp;</span>links<span class="hide">]</span></a> to other content.</p>
+				<ul>
+					<li></li>
+					<li></li>
+					<li></li>
+				</ul>
+				<a class="" href="">return</a>
+			</div>
+			<!-- <div id="Collapse" class="hide" onclick="javascript:collapse()"> -->
+			<!-- </div> -->
+		</div>
+		<div id="MainTabWrapper" class="wrapper">
+			<ul id="MainNav">
+	            <li class="active">Ensuing&nbsp;System</li>
+	            <li>Models</li>
+	            <li id="AtProf">Atmospheric&nbsp;Profile</li>
+	            <li>Chase</li>
+	            <li>Wx&nbsp;Alerts</li>
+	        </ul>
+	
+	        <div id="MainTab1" class="content show"><!-- content -->
+	            <h3>Ensuing&nbsp;Systems</h3>
+	            <p>Must contain <a class="link" href="#"><span class="hide">[see&nbsp;</span>links<span class="hide">]</span></a> to other content.</p>
+	            <ul>
+	                <li></li>
+	                <li></li>
+	                <li></li>
+	            </ul>
+	            <a href="javascript:return_tab()">return</a>
+	        </div>
+			<div id="MainTab2" class="content hide"><!-- content -->
+	            <h3>Models</h3>
+	            <%= render "layouts/models" %>
+	            <a href="javascript:return_tab()">return</a>
+	        </div>
+			<div id="MainTab3" class="content hide"><!-- content -->
+	            <h3>Atmospheric&nbsp;Profile</h3>
+	            <p>Must contain <a class="link" href="#"><span class="hide">[see&nbsp;</span>links<span class="hide">]</span></a> to other content.</p>
+	            <ul>
+	                <li></li>
+	                <li></li>
+	                <li></li>
+	            </ul>
+	            <a href="javascript:return_tab()">return</a>
+	        </div>
+			<div id="MainTab4" class="content hide"><!-- content -->
+	            <h3>Chase</h3>
+	            <p>Must contain <a class="link" href="#"><span class="hide">[see&nbsp;</span>links<span class="hide">]</span></a> to other content.</p>
+	            <ul>
+	                <li></li>
+	                <li></li>
+	                <li></li>
+	            </ul>
+	            <a href="javascript:return_tab()">return</a>
+	        </div>
+	        <div id="MainTab4" class="content hide"><!-- content -->
+	            <h3>Watches/Warnings</h3>
+	            <p>Must contain <a class="link" href="#"><span class="hide">[see&nbsp;</span>links<span class="hide">]</span></a> to other content.</p>
+	            <ul>
+	                <li></li>
+	                <li></li>
+	                <li></li>
+	            </ul>
+	            <a href="javascript:return_tab()">return</a>
+	        </div>
+			<div id="MainTab4" class="content hide"><!-- content -->
+	            <h3>Terms&nbsp;and&nbsp;Definitions</h3>
+	            <p>Must contain <a class="link" href="#"><span class="hide">[see&nbsp;</span>links<span class="hide">]</span></a> to other content.</p>
+	            <ul>
+	                <li></li>
+	                <li></li>
+	                <li></li>
+	            </ul>
+	            <a href="javascript:return_tab()">return</a>
+	        </div>
+		</div><!-- end MainTabWrapper -->
+	</div><!-- end HomeWrapper -->

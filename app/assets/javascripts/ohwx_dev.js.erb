@@ -1,0 +1,458 @@
+﻿/*********************************
+ *  Javascript/JQuery for OH-Wx	 *
+ *  S. Andrew Walters Jr         *
+ *  5/06/15 - Copyright          *
+ *********************************/
+
+$.support.cors = true;
+
+
+function getHTML() {
+	
+	$.ajax({url: "http://forecast.weather.gov/MapClick.php?zoneid=OHZ062&FcstType=json",
+			type: "GET",
+			dataType: "html",
+			async: false,
+			crossDomain: true,
+			cache: true,
+			headers: {"Origin":"", "Access-Control-Request-Method":"GET"},
+			error: function(req,stt,err) { alert("Req: " + req + "\nStat: " + stt + "\nErr: " + err); },
+			success: function (data) {
+				if(!data) { alert("Data not received"); }
+				else {
+					var results = $(data).find("p.myforecast-current-lrg").text();
+					alert("Results: " + results);
+				}
+			}
+	});			
+}
+
+function getJSON(callback) {	
+	$.ajax({/*url: "http://forecast.weather.gov/MapClick.php?zoneid=OHZ062&FcstType=json",*/
+			url: "http://forecast.weather.gov/MapClick.php?lat=39.7594&lon=-84.1917&FcstType=json",
+			type: "GET",
+			dataType: "jsonp",
+			crossDomain: true,
+			headers: {"Origin":"", "Access-Control-Request-Method":"GET"},
+			error: function(req,stt,err) { alert("Req: " + req + "\nStat: " + stt + "\nErr: " + err); },
+			success: function (data) {
+				if(!data) { alert("Data not received"); }
+				else {
+					callback(data.currentobservation.Winds,
+							 data.currentobservation.Windd,
+							 data.currentobservation.Temp,
+							 data.currentobservation.Dewp,
+							 data.currentobservation.Weather);
+							 
+					//alert(data.currentobservation.Winds);
+				}
+			}
+	});
+}
+
+
+function wx_obs() {
+	
+	getJSON(function(w_obs, w_dir, t_obs, d_obs, wx_obs) {
+	
+		var cnv = document.getElementById("LogoImg");
+		var cursor = cnv.getContext("2d");
+		var img = new Image();		
+				
+
+		// draw shell
+		cursor.beginPath();
+		cursor.arc(135,75,30,0,2*Math.PI);
+		cursor.stroke();
+	
+		// draw wx condition	
+		// cloudy
+		if (wx_obs == "Partly Cloudy" ||
+			wx_obs == "Mostly Cloudy" ||
+			wx_obs == "Overcast") {
+			cursor.beginPath();
+			cursor.arc(135,75,30,(3/2)*Math.PI,Math.PI/2);
+			cursor.fill();
+			cursor.beginPath();
+			cursor.fillStyle = "#FFFFFF";
+			cursor.arc(135,75,30,Math.PI/2,(3/2)*Math.PI);
+			cursor.fill();
+		}
+		// sunny
+		else if (wx_obs == "Fair" ||
+				 wx_obs == "A Few Clouds") {			
+			cursor.beginPath();
+			cursor.fillStyle = "#FFFFFF";
+			cursor.arc(135,75,30,0,2*Math.PI);
+			cursor.fill();
+		}
+		// precipitating 
+		else {
+			cursor.beginPath();
+			cursor.arc(135,75,30,0,2*Math.PI);
+			cursor.fill();
+		}
+					
+		// draw Logo
+		img.onload = function() { cursor.drawImage(img, 110, 55); }
+		img.src = "<%= asset_path('logo3.png') %>";
+		cursor.save();
+					
+		// draw winds			
+		// draw wind barb
+		var x_end = 0;
+		var y_end = -70;
+					
+		cursor.translate(135,75); // set origin to center of shell
+		cursor.rotate(w_dir*Math.PI/180);
+					
+		cursor.strokeStyle = "#FFFFFF";
+		cursor.fillStyle = "#FFFFFF";
+		cursor.lineWidth = 2;
+					
+		// draw shaft
+		cursor.beginPath();
+		cursor.moveTo(0,0); // set to 0,0 for translate
+		cursor.lineTo(x_end, y_end);
+		cursor.stroke();
+					
+		// draw flags
+		cursor.beginPath();
+		cursor.moveTo(x_end,y_end);
+					
+		if (w_obs < 10) {
+			cursor.moveTo(x_end,y_end+=5);
+			cursor.lineTo(x_end+10,y_end);
+		}
+		else {
+			if (w_obs >= 50) {
+				var diff = 0;
+							
+				for (var i=50; i<=w_obs; i+=50) {
+					cursor.lineTo(x_end+20,y_end+2.5);
+					cursor.lineTo(x_end,y_end+5);
+					cursor.fill();
+					cursor.moveTo(x_end,y_end+=10);
+					diff = w_obs - i;
+				}
+				for (var i=5; i<diff; i+=10) {
+					cursor.lineTo(x_end+20,y_end);
+					cursor.moveTo(x_end,y_end+=5);
+				}
+			}
+			else {
+				for (var i=5; i<w_obs; i+=10) {
+					cursor.lineTo(x_end+20,y_end);
+					cursor.moveTo(x_end,y_end+=5);
+				}
+			}
+			if (w_obs%10 != 0) { cursor.lineTo(x_end+10,y_end); }
+		}
+		cursor.stroke();			
+		cursor.restore();
+					
+		// draw temp and dew pt
+		var x_str = 120;			
+					
+		if (w_dir<45 || w_dir>=135 && w_dir<168) { x_str = 90; }
+		else if (w_dir>=315 || w_dir>=168 && w_dir<225) { x_str = 150; }
+					
+		cursor.beginPath();
+		cursor.font = "bold 30px Arial";
+		cursor.fillStyle = "#FF0000";
+		cursor.fillText(t_obs,x_str,38);
+		cursor.fillStyle = "#00FF00";
+		cursor.fillText(d_obs,x_str,135);
+		
+	});// end getJSON(...)
+}// end wx_obs()				
+
+
+
+
+
+/*******************
+ *  Animated Tabs  *
+ *******************/
+ var aniStack = new Array();
+ var aniIndex = 0;
+ var expanded = false;
+ var colbutHeight = 0;
+ 
+ function expand() {
+	 // abreviate Atmopheric Profile main tab title
+	 $("#AtProf").text("Atm Prof");
+ 	// expand AniTab content
+	$("#AniTabWrapper").animate({width:"585px"},{queue:false, duration:1500});
+	// collapse MainTab content
+	$("#MainTabWrapper").animate({width:"585px"},{duration:1500});
+	// show Collapse button
+	$("#Collapse").removeClass("hide");
+	$("#Collapse").addClass("show");
+	// adjust height of Collapse button - ERRORS
+
+	
+	expanded = true;
+
+}
+ 
+ function collapse() {
+	 // expand Atmospheric Profile main tab title
+	 $("#AtProf").text("Atmospheric Profile");
+ 	// collapse AniTab content
+	$("#AniTabWrapper").animate({width:"60px"},{queue:false, duration:1500});
+	// expand MainTab content
+	$("#MainTabWrapper").animate({width:"1110px"},{duration:1500});
+	// reset tabs
+	$("#AniTabs li").removeClass("active");
+	$("#AniTabWrapper > div.content").slideUp("1500");
+	// hide Collapse button
+	$("#Collapse").removeClass("show");
+	$("#Collapse").addClass("hide");
+	// reset Collapse button height - ERRORS
+	//colbutHeight = 0;
+	expanded = false;
+}
+
+
+
+
+/***************
+ *  Main Tabs  *
+ ***************/
+var mainStack = new Array("0");
+var mainIndex = 1;
+
+
+/*** NEEDS WORK - incorrect return ***/
+function return_tab() {
+	// hide all tab content and reset tabs
+    $("#MainTabWrapper > div.content").removeClass("show");
+    $("#MainTabWrapper > div.content").addClass("hide");
+    $("#MainNav li").removeClass("active");
+    
+    // if index < 2, show default Tab_content
+    if (mainIndex < 2) {
+        $("#MainNav li:eq(0)").addClass("active");
+        $("#MainTabWrapper > div:eq(0)").removeClass("hide");
+        $("#MainTabWrapper > div:eq(0)").addClass("show");
+    }
+ 	// otherwise return to last visited Tab
+    else {
+        // assign last active Tab
+        $("#MainNav li:eq(" + mainStack[mainIndex - 2] + ")").addClass("active");
+        // show last active Tab_content
+        $("#MainTabWrapper > div:eq(" + mainStack[mainIndex - 2] + ")").removeClass("hide");
+        $("#MainTabWrapper > div:eq(" + mainStack[mainIndex - 2] + ")").addClass("show");
+
+        mainIndex -= 1;
+    }
+
+    // goto top of tabs
+    window.location("#MainTabWrapper");
+    // window.scrollTo(0,0); <-- goto top of page
+}
+
+function select_tab(selected) {
+	// hide tab content
+	$("#MainTabWrapper > div").removeClass("show");
+	$("#MainTabWrapper > div").addClass("hide");
+	// reset tabs
+	$("#MainNav li").removeClass("active");
+	
+	
+	/*** INCOMPLETE - unused ***/
+
+}
+
+
+/************
+ *  Models  *
+ ************/
+function hide_lists(cell) {
+    // hide the cell's lists
+    $(cell + " ul.model").removeClass("show");
+    $(cell + " ul.model").addClass("hide");
+    // reset the cell's list
+    $(cell + " ul li").removeClass("selected");
+}
+function show_selection(selector, selectee, tis) {
+    // reset selector list
+    $(selector + " ul li").removeClass("selected");
+    // highlight selection
+    $(tis).addClass("selected");
+    // show selected child list
+    $(selectee + " ul.model:eq(" + $(selector + " ul li").index(tis) + ")").removeClass("hide");
+    $(selectee + " ul.model:eq(" + $(selector + " ul li").index(tis) + ")").addClass("show");
+}
+function show_mdl(img) {
+	document.getElementById("MdlImg").src = img.href;
+}
+
+
+
+$(document).ready(function () {
+	// reset tabs
+	$("#AniTabs > li").removeClass("active");
+	
+	// default title for model img
+	var prod = $("#QPProds ul:first li.selected").text();
+	var date = $("#QPDates ul:first li.selected").text();
+    var title = prod + " @ " + $("#QPInits ul:first li.selected").text() + " - " + date;
+    
+    // hide model data
+    $("#Models ul.model").removeClass("show");
+    $("#Models ul.model").addClass("hide");
+    // show default model data
+    $("#Models ul:first").removeClass("hide");
+    $("#Models ul:first").addClass("show");
+    // show default model title
+    $("#MdlTitle").text(title);
+
+
+	/*******************
+	 *  Animated Tabs  *
+	 *******************/
+	$("#AniTabs > li").click(function () {
+		// collapse tab if it's active
+		if ( $(this).hasClass("active") ) { collapse(); }
+		// else expand tabs and show content
+		else {
+			// if AniTabs are collapsed, expand them
+			if (expanded == false) { expand(); }
+			// reset tabs
+			$("#AniTabs > li").removeClass("active");
+			$("#AniTabWrapper > div.content").slideUp("1500");
+			// highlight active tab
+			$(this).addClass("active");
+			// show tab content
+			$("#AniTabWrapper > div.content:eq(" + $("#AniTabs li").index(this) + ")").slideDown("1500");
+			
+			// might be unnecessary
+			setTimeout( $("#Collapse").height( colbutHeight ) , 1500); 
+		}
+			/* ADD RETURN CAPABILITY */		
+	});
+	
+	/***************
+	 *  Main Tabs  *
+	 ***************/
+	$("#MainNav > li").click(function () {
+		if (!$(this).hasClass("active")) {
+			// hide tab content
+			$("#MainTabWrapper > div").removeClass("show");
+			$("#MainTabWrapper > div").addClass("hide");
+			// reset tabs
+			$("#MainNav li").removeClass("active");
+			// assign active tab
+			$(this).addClass("active");
+			// show clicked tab content
+			$("#MainTabWrapper > div:eq(" + $("#MainNav li").index(this) + ")").removeClass("hide");
+			$("#MainTabWrapper > div:eq(" + $("#MainNav li").index(this) + ")").addClass("show");
+			
+			// store tab value for return
+			mainStack[mainIndex] = $("#MainNav li").index(this);
+			mainIndex++;
+		}
+	});
+		
+	
+	
+	
+	/************
+	 *  Models  *
+	 ************/
+	$("#APProds ul li").click(function () {
+        // build img title from selection
+        prod = $(this).text();
+
+        if (!$(this).hasClass("selected")) {
+            // reset Product list(s)
+            $("#APProds li").removeClass("selected");
+            $("#QPProds li").removeClass("selected");
+
+            // hide all lists
+            hide_lists("#Models");
+
+            // make selection
+            show_selection("#APProds", "#APInits", this);
+        }
+	});
+    $("#APInits ul li").click(function () {
+        // build img title from selection
+        date = $(this).text();
+
+        if (!$(this).hasClass("selected")) {
+            // hide Init and Hour lists
+            hide_lists("#APHours");
+            hide_lists("#APData");
+
+            // make selection
+            show_selection("#APInits", "#APHours", this);
+        }
+    });
+    $("#APHours ul li").click(function () {
+        // build img title from selection
+        title = $(this).text() + " " + prod + " @ " + date;
+
+        if (!$(this).hasClass("selected")) {
+            // hide HourData list
+            hide_lists("#APData");
+
+            // make selection
+            show_selection("#APHours", "#APData", this);
+
+            // show model title
+            $("#MdlTitle").text(title);
+        }
+    });
+    $("#QPProds ul li").click(function () {
+        // build img title from selection
+        prod = $(this).text();
+	
+		if (!$(this).hasClass("selected")) {
+	        // reset Product list(s)
+	        $("#APProds li").removeClass("selected");
+	        $("#QPProds li").removeClass("selected");
+	
+	        // hide all lists
+	        hide_lists("#Models");
+	
+	        // make selection
+	        show_selection("#QPProds", "#QPDates", this);
+	    }
+	});
+    $("#QPDates ul li").click(function () {
+        // build img title from selection
+        date = $(this).text();
+            
+        if (!$(this).hasClass("selected")) {
+	        // hide ProfData list
+	        hide_lists("#QPInits");
+	        hide_lists("#QPData");
+	
+	        // make selection
+	        show_selection("#QPDates", "#QPInits", this);
+	    }
+    });
+    $("#QPInits ul li").click(function() {
+    	// build im title from selection
+    	title = prod + " @ " + $(this).text() + " - " + date;
+    	
+    	if (!$(this).hasClass("selected")) {
+    		// hide QuadPanel data
+    		hide_lists("#QPData");
+    		
+    		show_selection("#QPInits", "#QPData", this);
+    		
+    		// show model title
+    		$("#MdlTitle").text(title);
+    	}
+    });
+
+
+	
+});// end doc.ready()
+
+  	
+  	

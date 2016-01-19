@@ -1,0 +1,22 @@
+<header class="wrapper">
+		<h1 id="Title">OH-Wx</h1>
+		<div id="SubtitleWrapper">
+			<!--<h2>Comprehensive Weather<span><br />for the<br /></span>Ohio Valley</h2> -->
+			<h2>Ohio&nbsp;Valley<br />Weather</h2>
+			<nav id="TitleNav">
+				<ul id="TitleLinks">
+					<li><%= link_to "Home",			:root %></li>
+					<li><%= link_to "Wx Events", 	"WxEvents" %></li>
+					<li><%= link_to "Images",		"Images" %></li>
+					<li><%= link_to "STM CHSN",		"Chase" %></li>
+					<li><%= link_to "HAM",			"Ham" %></li>
+					<li><%= link_to "L.O.W.",		"L_O_W" %></li>
+					<li><%= link_to "About",		"About" %></li>
+				</ul>
+			</nav>
+		</div>
+		<div id="LogoWrapper">
+			<canvas id="LogoImg"></canvas>
+			<script type="text/javascript"> wx_obs(); </script>
+		</div>
+</header>

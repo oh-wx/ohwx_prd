@@ -1,0 +1,491 @@
+﻿/*********************************
+ *  Stylesheet for OHWX Sandbox  *
+ *  S. Andrew Walters Jr         *
+ *  2/09/15 - Copyright         *
+ *********************************/
+ 
+/*************
+ *  Globals  *
+ *************/
+html {
+	background-color: #000;	
+}
+body {
+	width: 1200px;
+	margin: 0 auto;
+	background-image:url("<%= asset_path('6.06.10.png') %>");
+	background-repeat: no-repeat;
+	background-size: 100%;
+	
+	height: 2000px; /* remove */
+}
+header {
+	width: 100%;
+	height: 140px; /* 7%; enforced from body height */
+	margin: 0 auto 156px /*13%*/ auto;
+	
+	font-size: 80px;
+	color: #FFF;
+	text-align: center;
+}
+footer {
+	width: 100%;
+	height: 60px; /* 3%; enforced from body height */
+	margin: 1900px /*50%*/ auto 0 auto;
+}
+article, figure {
+	margin: 0;
+	padding: 10px;
+	background-color: rgba(80,80,80,.7);
+	color: #FFF;
+	border-radius: 5px;
+	-mo-border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+}
+.clear { clear: both; }
+.wrapper { background-color: rgba(80,80,80,.3); }
+.overflow { overflow: auto; }
+.link {
+	text-decoration: none;
+	font-family: Aharoni;
+	color: #FF9933;	
+}
+/*.link span { display: none; }*/
+.link:hover span { 
+	display: inline;
+	color: #FF9933;
+}
+.hide { display: none; }
+.show { display: block; }
+.content {
+	/*width: 95%;
+	margin: 0px auto;*/
+	padding: 7px;
+	background-color: rgba(80,80,80,.7);
+	color: #FFF;
+	border-radius: 5px;
+	-mo-border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+}
+
+/****************
+ *  Header Bar  *
+ ****************/
+#Title {
+	float: left;
+	display: inline;
+	width: 280px;/* 25%; */
+	margin: 24px auto;/* 2% auto; */
+	font-size: 95%;
+	vertical-align: middle;
+	font-family: "Arial Black", sans-serif;
+	font-weight: bolder;
+	font-style: italic;
+	font-variant: small-caps;
+}
+#SubtitleWrapper {
+	float: left;
+	width: 640px; /* 55%; */
+	height: 100%;
+	margin: 0;
+}
+#SubtitleWrapper h2 {
+	width: 100%;
+	height: 75%;
+	font-size: 50%;
+	font-family: "Courier New", Courier, monospace;
+	font-weight: bold;
+	margin: 0 auto;
+	
+	/* Comprehensive Wx subtitle
+	margin: 5px 0 0 0;
+	line-height: 28px; */
+}
+
+/* Comprehensive Wx subtitle 
+#SubtitleWrapper h2 span { font-size: 25px; } */
+
+#TitleNav {
+	width: 100%;
+	height: 25%;
+	margin: 0;
+	font-size: 24%;
+}
+#TitleLinks {
+	width: 93%;
+	margin: 0 5% 0 0;
+	list-style: none;
+	text-align: left;
+}
+#TitleLinks li {
+	display: inline;
+	padding: 0 1%;
+	text-align: center;
+	border-right: 2px dotted #FFF;
+	border-left: 2px dotted #FFF;
+}
+#TitleLinks li:first-child {
+	border-left: 2px dotted transparent;
+}
+#TitleLinks li:last-child {
+	border-right: 2px dotted transparent;
+}
+#TitleLinks li:hover {
+	border-right: 2px dotted #FF9933;
+	border-left: 2px dotted #FF9933;
+}
+#TitleLinks li a {
+	text-decoration: none;
+	cursor: pointer;
+	font-family: Aharoni;
+	font-variant: small-caps;
+	color: #FF9933;
+}
+#LogoWrapper {
+	float: right;
+	/* width: 280px;  20%; */
+	height: 100%;
+}
+#LogoImg {
+	width: 280px;
+	height: 140px;
+	margin: 0 auto;
+}
+
+/****************
+ *  Footer Bar  *
+ ****************/
+footer ul {
+	list-style: none;
+}
+footer ul li {
+	display: inline;
+}
+footer ul li a {
+	text-decoration: none;
+	color: #FF9933;
+}
+#RailsWrapper {
+	float: left;
+	width: 20%;
+	margin: 0 0 0 20%;
+	height: 50%;
+}
+#FooterNav {
+	float: left;
+	width: 60%;
+	height: 50%;
+}
+#FooterLinks {
+	width: 100%;
+	margin: 0 auto;
+	text-align: center;
+}
+#BrowserWrapper {
+	width: 100%;
+	height: 50%;
+}
+#BrowserLinks {
+	width: 100%;
+	margin: 0 auto;
+	text-align: center;
+}
+
+/*******************
+ *  Animated Tabs  *
+ *******************/
+#AniTabWrapper {
+	float: left;
+	width: 60px; /* 60 <-> 585 */
+	margin-right: 10px; /* 1% ; 12px */
+	padding: 10px 0 10px 10px;
+}
+#AniTabWrapper > nav {
+	float: left;
+}
+#AniTabWrapper > div.content {
+	float: left;
+	width: 82%; /* 480 */
+	margin: 9px auto 0 10px;
+}
+#Collapse {
+	float: left;
+	width: 25px;
+	padding-top: 7px;
+	margin: 9px 0;
+	background-image:url("<%= asset_path('Clipart/collapse.png') %>");
+	background-repeat: repeat-y;
+	cursor: pointer;
+}
+#AniTabs {
+	list-style: none;
+	padding: 0;
+	margin: 10px 0;
+	width: 100%;
+}
+#AniTabs li {
+	width: 50px;
+	height: 50px;
+	margin: 0 auto 10px auto;
+	background-color: rgba(80,80,80,.7);
+	border-color: rgba(80,80,80,.7);
+	border-radius: 5px;
+	-mo-border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-style: outset;
+}
+#AniTabs li img {
+	display: block;
+	margin: 0 auto; 
+}
+#AniTabs li:hover { cursor: pointer; }
+#AniTabs li.active { border-style: inset; }
+
+/***************
+ *  Main Tabs  *
+ ***************/
+#MainTabWrapper {
+	float: left;
+	width: 1110px;/* 50 <-> 93% ; 600 <-> 1110px */
+	padding: 8px 0px;
+}
+#MainTabWrapper > div {
+	width: 95%;
+	margin: 0px auto;
+}
+#MainNav
+{
+     margin: 5px auto 6px auto;
+     text-align: center;
+     list-style: none;
+     padding: 0px;  
+}
+#MainNav li
+{
+	display: inline;
+    background-color: #464C54;
+    color: #FFF;
+    padding: 7px 14px;
+    text-decoration: none;
+    font-size: 13px;
+    font-family: Aharoni;
+    font-weight: bold;
+    text-transform: uppercase;
+    border: 1px #464C54 solid;
+}
+#MainNav li:hover
+{
+    color: #FFF;
+    background-color: rgba(255,153,51,.7);
+    border-color: rgba(255,153,51,.7);
+    text-decoration: none;
+    
+    cursor: pointer;
+}
+#MainNav li.active
+{
+    background-color: rgba(80,80,80,.7);
+    color: #FF9933;
+    border: 1px rgba(80,80,80,.7) solid;
+    text-decoration: none;
+}
+
+/************
+ *  Models  *
+ ************/
+#MdlWrapper
+{
+	width: 673px;
+}
+#Models
+{
+	width: 100%;
+	border-collapse: collapse;
+}
+#Models th
+{
+	color: #FFF;
+}
+#Models ul
+{
+	list-style: none;
+	text-align: left;
+}
+#Models ul li
+{
+	text-align: center;
+	color: #FF9933;
+	border: 2px rgba(0,0,0,0) solid;
+}
+#Models ul li.selected
+{
+	color: #FFF;
+	background-color: rgba(80,80,80,.7);
+	border: 2px #FFF double;
+	border-radius: 5px;
+	-mo-border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-raidus: 5px;
+}
+#Models ul li:hover
+{
+	color: #FFF;
+	border: 2px #FF9933 dashed;
+	border-radius: 5px;
+	-mo-border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	cursor: pointer;
+}
+#APModels, #QPModels, #MdlImg { width: 100%; }
+#QPData ul
+{
+	text-align: center;	
+}
+#QPData ul li
+{
+	display: inline;
+}
+#TitleRow
+{
+	border-bottom: 3px solid #FFF;
+}
+#TitleRow > th:first-child
+{
+	border-right: 3px solid #FFF;
+}
+#ModelRow
+{
+	border-bottom: 3px solid #FFF;
+}
+#ModelRow > td:first-child
+{
+	border-right: 3px solid #FFF;
+}
+#ImgRow
+{
+	text-align: center;
+}
+
+/****************
+ *  About Page  *
+ ****************/
+#AbtOHWx {
+	float: right;
+	width: 585px;
+	margin: 10px 10px 0 0;
+ }
+#AbtMe, #Truck {
+	float: left;
+	width: 585px;
+	margin: 10px 0 0 10px;
+}
+
+/*******************************/
+ #Truck  { /* Adjust or remove */
+
+	width: 565px;
+	height: 280px;
+}
+/******************************/
+
+ #AbtOHWx > article {
+	 margin-bottom: 10px;
+ }
+/**************
+ *  HAM Page  *
+ **************/
+#ARRLLogo {
+	float: left;
+	text-align: center;
+	margin: 10px 0 0 10px;
+}
+#ARRLLogo > img {
+	/* 761x1500 */
+	/* width: 360px; */
+
+	height: 350px;
+}
+#History {
+	float: left;
+	width: 950px;
+	margin: 10px 0 0 10px;
+}
+#History > p { font-style: italic; }
+#History > p > span { font-style: normal; }
+
+/* TEMPORARY */
+#MblInstall > article { 
+	width: 500px;
+	margin: 10px 0 0 10px;
+}
+ 
+/******************************************** REMOVE AFTER DEMO ***/
+
+/*********************
+ *  Extensive Table  *
+ *********************/
+ #ExtTable
+ {
+     width: 100%;
+     border-collapse: collapse;
+ }
+ #ExtTable ul
+ {
+     list-style: none;
+     text-align: left;
+     
+     padding: 0;
+ }
+ #ExtTable ul li  
+ {
+     width: auto;
+     color: #FF9933;
+ }
+ #ExtTable ul li.selected
+ {
+     background-color: Blue;
+     color: #FF9933;
+ }
+ #ExtTable ul li:hover
+ {
+     background-color: Red;
+     color: #FF9933;
+     cursor: pointer;
+ }
+ #ProfTable
+ {
+     width: 100%;
+ }
+ #QuadTable 
+ {
+     width: 100%;
+ }
+ #HourData ul
+ {
+     text-align: center;
+ }
+ #HourData li
+ {
+     display: inline;
+ }
+ #TitleRow
+ {
+     border-bottom: 3px solid #FFF;
+ }
+ #TitleRow > th:first-child 
+ {
+     border-right: 3px solid #FFF;
+ }
+ #ModelRow
+ {
+     border-bottom: 3px solid #FFF;
+ }
+ #ModelRow > td:first-child
+ {
+     border-right: 3px solid #FFF;
+ }
+ #ImgRow { text-align: center; }
